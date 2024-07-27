@@ -1,8 +1,20 @@
-////Call a function when a button is clicked not return value only a fuction
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 function App() {
-  const [color, setColor] = useState("olive");
+  // Initialize state with the color from localStorage, or default to 'olive'
+  const [color, setColor] = useState(() => {
+    // Return the color from localStorage, or default to 'olive' if not found
+    return localStorage.getItem('backgroundColor') || 'olive';
+  });
+
+  // The getItem() method returns value of the specified Storage Object item.
+  // The getItem() method belongs to the Storage Object, which can be either a 
+  // localStorage object or a sessionStorage object.
+
+  // Update localStorage whenever the color changes
+  useEffect(() => {
+    localStorage.setItem('backgroundColor', color);
+  }, [color]);
 
   return (
     <div className="w-full h-screen" style={{ backgroundColor: color }}>
@@ -11,7 +23,6 @@ function App() {
           <button
             className="outline-none px-4 py-1 rounded-full text-white shadow-lg"
             style={{ backgroundColor: "red" }}
-            ////Call a function when a button is clicked not return value only a fuction
             onClick={() => setColor("red")}
           >
             Red
@@ -35,27 +46,26 @@ function App() {
             className="outline-none px-4 py-1 rounded-full text-white shadow-lg"
             style={{ backgroundColor: "black" }}
           >
-            Yellow
+            Black
           </button>
-
           <button
             onClick={() => setColor("cyan")}
             className="outline-none px-4 py-1 rounded-full text-white shadow-lg"
             style={{ backgroundColor: "cyan" }}
           >
-            Yellow
+            Cyan
           </button>
-
           <button
             onClick={() => setColor("orange")}
             className="outline-none px-4 py-1 rounded-full text-white shadow-lg"
             style={{ backgroundColor: "orange" }}
           >
-            Yellow
+            Orange
           </button>
         </div>
       </div>
     </div>
   );
 }
+
 export default App;
